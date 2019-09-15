@@ -10,13 +10,5 @@
         public object Clone() {
             return new Line(P1, P2);
         }
-
-        public bool Intersects(IShape other) {
-            throw new System.NotImplementedException();
-        }
-
-        public bool TryGetIntersects(IShape other, out Vector[] intersects) {
-            throw new System.NotImplementedException();
-        }
     }
 }
