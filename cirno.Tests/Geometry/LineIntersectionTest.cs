@@ -48,8 +48,8 @@ namespace cirno.Tests.Geometry {
 
         [TestMethod]
         public void TestSegSegNo() {
-            AssertIntersect(S(0, 0, 1, 1), S(0, 2, 0.9f, 0.9f));
-            AssertIntersect(L(1, 0, 2, 0), S(0, 0, 0, 1));
+            AssertIntersect(S(0, 0, 1, 1), S(0, 2, 1, 1.1f));
+            AssertIntersect(S(1, 0, 2, 0), S(0, 0, 1, 1));
         }
     }
 }
