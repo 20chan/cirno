@@ -1,12 +1,6 @@
-﻿using System;
-
-namespace cirno.Geometry {
-    public class Line : IShape {
-        public Vector P1, P2;
-
-        public Line(Vector p1, Vector p2) {
-            P1 = p1;
-            P2 = p2;
+﻿namespace cirno.Geometry {
+    public class Line : LineLike {
+        public Line(Vector p1, Vector p2) : base(p1, p2) {
         }
 
         public override int GetHashCode() {
@@ -43,7 +37,7 @@ namespace cirno.Geometry {
             return (P1 - P2).Cross(other.P1 - other.P2) < tolerance;
         }
 
-        public object Clone() {
+        public override object Clone() {
             return new Line(P1, P2);
         }
     }

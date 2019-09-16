@@ -1,13 +1,37 @@
-﻿namespace cirno.Geometry {
-    public class LineSegment : IShape {
-        public Vector P1, P2;
+﻿using System;
 
-        public LineSegment(Vector p1, Vector p2) {
-            P1 = p1;
-            P2 = p2;
+namespace cirno.Geometry {
+    public class LineSegment : LineLike {
+        public LineSegment(Vector p1, Vector p2) : base(p1, p2) {
         }
 
-        public object Clone() {
+        public override int GetHashCode() {
+            unchecked {
+                var hash = 17;
+                hash = hash * 31 + P1.GetHashCode();
+                hash = hash * 31 + P2.GetHashCode();
+                return hash;
+            }
+        }
+
+        public override bool Equals(object obj) {
+            if (!(obj is LineSegment l)) {
+                return false;
+            }
+
+            return Equals(l);
+        }
+
+        public bool Equals(LineSegment other, float tolerance = 0.0001f) {
+            return (Close(P1, other.P1) && Close(P2, other.P2))
+                || (Close(P1, other.P2) && Close(P2, other.P1));
+
+            bool Close(Vector a, Vector b) {
+                return Math.Abs(a.X - b.X) < tolerance && Math.Abs(a.Y - b.Y) < tolerance;
+            }
+        }
+
+        public override object Clone() {
             return new LineSegment(P1, P2);
         }
     }
