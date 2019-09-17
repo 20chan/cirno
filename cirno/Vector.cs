@@ -31,15 +31,40 @@ namespace cirno {
                 && Math.Abs(Y - other.Y) < tolerance;
         }
 
+        public float Magnitude {
+            get => X * X + Y * Y;
+        }
+
+        public float Length {
+            get => (float)Math.Sqrt(Magnitude);
+        }
+
         public float Cross(Vector other) {
             return X * other.Y - Y * other.X;
+        }
+
+        public float Dot(Vector other) {
+            return X * other.X + Y * other.Y;
         }
 
         public static Vector operator +(Vector a, Vector b) {
             return new Vector(a.X + b.X, a.Y + b.Y);
         }
+
         public static Vector operator -(Vector a, Vector b) {
             return new Vector(a.X - b.X, a.Y - b.Y);
+        }
+
+        public static Vector operator *(Vector v, float n) {
+            return new Vector(v.X * n, v.Y * n);
+        }
+
+        public static Vector operator *(float n, Vector v) {
+            return new Vector(v.X * n, v.Y * n);
+        }
+
+        public static Vector operator /(Vector v, float n) {
+            return new Vector(v.X / n, v.Y / n);
         }
     }
 }

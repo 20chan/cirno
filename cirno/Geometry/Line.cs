@@ -33,10 +33,6 @@
             return Parallel(new Line(P1, other.P1), tolerance);
         }
 
-        public bool Parallel(Line other, float tolerance = 0.0001f) {
-            return (P1 - P2).Cross(other.P1 - other.P2) < tolerance;
-        }
-
         public override object Clone() {
             return new Line(P1, P2);
         }
