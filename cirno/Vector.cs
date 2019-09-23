@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace cirno {
+    [System.Diagnostics.DebuggerDisplay("({X}, {Y})")]
     public struct Vector {
         public float X, Y;
 
