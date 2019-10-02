@@ -15,6 +15,10 @@ namespace cirno.Geometry {
             return (P1 - P2).Cross(other.P1 - other.P2) < tolerance;
         }
 
+        public bool Perpendicular(Line other, float tolerance = 0.0001f) {
+            return (P1 - P2).Dot(other.P1 - other.P2) < tolerance;
+        }
+
         /// <summary>left: -1, on: 0, right: 1</summary>
         public int GetSideOf(Vector point) {
             return -1 * Math.Sign((P2.X - P1.X) * (point.Y - P1.Y) - (P2.Y - P1.Y) * (point.X - P1.X));
