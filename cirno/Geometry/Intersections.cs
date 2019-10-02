@@ -6,25 +6,23 @@ namespace cirno.Geometry {
             return TryGetIntersects(a, b, out _);
         }
 
-        public static bool TryGetIntersects(IShape a, IShape b, out Vector[] intersects) {
-            if (a is Line la) {
-                if (b is Line lb) {
+        public static bool TryGetIntersects(IShape a, IShape b, out Vector[] intersects)
+        {
+            switch (a)
+            {
+                case Line la when b is Line lb:
                     return LineLine(la, lb, false, false, out intersects);
-                }
-                else if (b is LineSegment sb) {
+                case Line la when b is LineSegment sb:
                     return LineLine(la, sb, false, true, out intersects);
-                }
-            }
-            else if (a is LineSegment sa) {
-                if (b is Line lb) {
+                case LineSegment sa when b is Line lb:
                     return LineLine(sa, lb, true, false, out intersects);
-                }
-                else if (b is LineSegment sb) {
+                case LineSegment sa when b is LineSegment sb:
                     return LineLine(sa, sb, true, true, out intersects);
-                }
+                case Circle ca when b is Circle cb:
+                    return CircleCircle(ca, cb, out intersects);
+                default:
+                    throw new NotImplementedException();
             }
-
-            throw new NotImplementedException();
         }
 
         private static bool LineLine(LineLike a, LineLike b, bool aSeg, bool bSeg, out Vector[] intersects) {
@@ -74,6 +72,48 @@ namespace cirno.Geometry {
 
             intersects = new[] { new Vector(xNume / deno, yNume / deno) };
             return true;
+        }
+
+        private static bool CircleCircle(Circle c1, Circle c2, out Vector[] intersects) {
+            // Read: https://www.xarg.org/2016/07/calculate-the-intersection-points-of-two-circles/
+            
+            if (c1.Equals(c2)) {
+                intersects = default;
+                return true;
+            }
+            
+            // Distance computation is susceptible to errors
+            // TODO consider using a hypot implementation
+            var difX = c1.Center.X - c2.Center.X;
+            var difY = c1.Center.Y - c2.Center.Y;
+            var dist = Math.Sqrt(difX * difX + difY * difY);
+
+            if (dist <= c1.Radius + c2.Radius && dist >= Math.Abs(c2.Radius - c1.Radius)) {
+                var ex = (c2.Center.X - c1.Center.X) / dist;
+                var ey = (c2.Center.Y - c1.Center.Y) / dist;
+
+                var x = (c1.Radius * c1.Radius - c2.Radius * c2.Radius + dist * dist) / (2 * dist);
+                var y = Math.Sqrt(c1.Radius * c1.Radius - x * x);
+
+                var intersection1 = new Vector {
+                    X = (float)(c1.Center.X + x * ex - y * ey),
+                    Y = (float)(c1.Center.Y + x * ey + y * ex)
+                };
+                
+                var intersection2 = new Vector {
+                    X = (float)(c1.Center.X + x * ex + y * ey),
+                    Y = (float)(c1.Center.Y + x * ey - y * ex)
+                };
+
+                intersects = intersection1.Equals(intersection2)
+                    ? new[] {intersection1}
+                    : new[] {intersection1, intersection2};
+                return true;
+            }
+
+            // No intersection, far outside or one circle within the other
+            intersects = new Vector[] { };
+            return false;
         }
     }
 }
