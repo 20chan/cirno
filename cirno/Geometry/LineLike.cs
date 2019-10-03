@@ -15,7 +15,7 @@ namespace cirno.Geometry {
             return (P1 - P2).Cross(other.P1 - other.P2) < tolerance;
         }
 
-        public bool Perpendicular(Line other, float tolerance = 0.0001f) {
+        public bool Perpendicular(LineLike other, float tolerance = 0.0001f) {
             return (P1 - P2).Dot(other.P1 - other.P2) < tolerance;
         }
 
