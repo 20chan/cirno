@@ -1,6 +1,6 @@
 ﻿namespace cirno.Geometry {
     public class Line : LineLike {
-        public Line(Vector p1, Vector p2) : base(p1, p2) {
+        public Line(Point p1, Point p2) : base(p1, p2) {
         }
 
         public override int GetHashCode() {

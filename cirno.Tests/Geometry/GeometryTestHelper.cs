@@ -25,20 +25,20 @@ namespace cirno.Tests.Geometry {
             return new Vector(x, y);
         }
 
-        public static Line L(Vector p1, Vector p2) {
+        public static Line L(Point p1, Point p2) {
             return new Line(p1, p2);
         }
 
         public static Line L(float x1, float y1, float x2, float y2) {
-            return new Line(new Vector(x1, y1), new Vector(x2, y2));
+            return new Line(new Point(x1, y1), new Point(x2, y2));
         }
 
-        public static LineSegment S(Vector p1, Vector p2) {
+        public static LineSegment S(Point p1, Point p2) {
             return new LineSegment(p1, p2);
         }
 
         public static LineSegment S(float x1, float y1, float x2, float y2) {
-            return new LineSegment(new Vector(x1, y1), new Vector(x2, y2));
+            return new LineSegment(new Point(x1, y1), new Point(x2, y2));
         }
     }
 }

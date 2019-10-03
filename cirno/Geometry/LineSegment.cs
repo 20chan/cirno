@@ -2,7 +2,7 @@
 
 namespace cirno.Geometry {
     public class LineSegment : LineLike {
-        public LineSegment(Vector p1, Vector p2) : base(p1, p2) {
+        public LineSegment(Point p1, Point p2) : base(p1, p2) {
         }
 
         public override int GetHashCode() {
@@ -26,7 +26,7 @@ namespace cirno.Geometry {
             return (Close(P1, other.P1) && Close(P2, other.P2))
                 || (Close(P1, other.P2) && Close(P2, other.P1));
 
-            bool Close(Vector a, Vector b) {
+            bool Close(Point a, Point b) {
                 return Math.Abs(a.X - b.X) < tolerance && Math.Abs(a.Y - b.Y) < tolerance;
             }
         }
