@@ -6,10 +6,8 @@ namespace cirno.Geometry {
             return TryGetIntersects(a, b, out _);
         }
 
-        public static bool TryGetIntersects(IShape a, IShape b, out Vector[] intersects)
-        {
-            switch (a)
-            {
+        public static bool TryGetIntersects(IShape a, IShape b, out Vector[] intersects) {
+            switch (a) {
                 case Line la when b is Line lb:
                     return LineLine(la, lb, false, false, out intersects);
                 case Line la when b is LineSegment sb:
@@ -25,9 +23,9 @@ namespace cirno.Geometry {
                 case Line la when b is Circle cb:
                     return CircleLine(cb, la, out intersects);
                 case Circle ca when b is LineSegment sb:
-                    throw new NotImplementedException();
-                case LineSegment la when b is Circle cb:
-                    throw new NotImplementedException();
+                    return CircleSegment(ca, sb, out intersects);
+                case LineSegment sa when b is Circle cb:
+                    return CircleSegment(cb, sa, out intersects);
                 default:
                     throw new NotImplementedException();
             }
@@ -71,6 +69,7 @@ namespace cirno.Geometry {
                     return false;
                 }
             }
+
             if (bSeg) {
                 if (u < 0 || 1 < u) {
                     intersects = default;
@@ -78,18 +77,18 @@ namespace cirno.Geometry {
                 }
             }
 
-            intersects = new[] { new Vector(xNume / deno, yNume / deno) };
+            intersects = new[] {new Vector(xNume / deno, yNume / deno)};
             return true;
         }
 
         private static bool CircleCircle(Circle c1, Circle c2, out Vector[] intersects) {
             // Read: https://www.xarg.org/2016/07/calculate-the-intersection-points-of-two-circles/
-            
+
             if (c1.Equals(c2)) {
                 intersects = default;
                 return true;
             }
-            
+
             // Distance computation is susceptible to errors
             // TODO consider using a hypot implementation
             var difX = c1.Center.X - c2.Center.X;
@@ -104,13 +103,13 @@ namespace cirno.Geometry {
                 var y = Math.Sqrt(c1.Radius * c1.Radius - x * x);
 
                 var intersection1 = new Vector {
-                    X = (float)(c1.Center.X + x * ex - y * ey),
-                    Y = (float)(c1.Center.Y + x * ey + y * ex)
+                    X = (float) (c1.Center.X + x * ex - y * ey),
+                    Y = (float) (c1.Center.Y + x * ey + y * ex)
                 };
-                
+
                 var intersection2 = new Vector {
-                    X = (float)(c1.Center.X + x * ex + y * ey),
-                    Y = (float)(c1.Center.Y + x * ey - y * ex)
+                    X = (float) (c1.Center.X + x * ex + y * ey),
+                    Y = (float) (c1.Center.Y + x * ey - y * ex)
                 };
 
                 intersects = intersection1.Equals(intersection2)
@@ -132,30 +131,93 @@ namespace cirno.Geometry {
             var discriminant = c.Radius * c.Radius * dr * dr - D * D;
 
             var signOf = new Func<float, int>((number) => { return number < 0 ? -1 : 1; });
-            
+
             switch (discriminant) {
                 case var d when d < 0:
                     intersects = default;
                     return false;
                 case 0:
                     var point = new Vector {
-                        X = (float)((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
-                        Y = (float)((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                        X = (float) ((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float) ((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
                     };
-                    intersects = new Vector[] { point };
+                    intersects = new Vector[] {point};
                     return true;
                 default:
                     var point1 = new Vector {
-                        X = (float)((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
-                        Y = (float)((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                        X = (float) ((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float) ((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
                     };
                     var point2 = new Vector {
-                        X = (float)((D * dy - signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
-                        Y = (float)((-D * dx - Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                        X = (float) ((D * dy - signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float) ((-D * dx - Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
                     };
-                    intersects = new Vector[] { point1, point2 };
+                    intersects = new Vector[] {point1, point2};
                     return true;
             }
+        }
+
+        public static bool CircleSegment(Circle circle, LineSegment segment, out Vector[] intersects) {
+            // See https://stackoverflow.com/questions/1073336/circle-line-segment-collision-detection-algorithm
+            
+            var d = segment.P2 - segment.P1;
+            var f = segment.P1 - circle.Center;
+            var a = d.Dot(d);
+            var b = 2 * f.Dot(d);
+            var c = f.Dot(f) - circle.Radius * circle.Radius;
+
+            var discriminant = b * b - 4 * a * c;
+
+            if (discriminant < 0) {
+                intersects = default;
+                return false;
+            }
+
+            discriminant = (float) Math.Sqrt(discriminant);
+
+            var t1 = (-b - discriminant) / (2 * a);
+            var t2 = (-b + discriminant) / (2 * a);
+
+            // 3x HIT cases:
+            //          -o->             --|-->  |            |  --|->
+            // Impale(t1 hit,t2 hit), Poke(t1 hit,t2>1), ExitWound(t1<0, t2 hit), 
+
+            // 3x MISS cases:
+            //       ->  o                     o ->              | -> |
+            // FallShort (t1>1,t2>1), Past (t1<0,t2<0), CompletelyInside(t1<0, t2>1)
+
+            if (t1 >= 0 && t1 <= 1) {
+                // t1 is the intersection, and it's closer than t2
+                // (since t1 uses -b - discriminant)
+                // Impale, Poke
+                var point1 = new Vector {
+                    X = (1 - t1) * segment.P1.X + t1 * segment.P2.X,
+                    Y = (1 - t1) * segment.P1.Y + t1 * segment.P2.Y
+                };
+                var point2 = new Vector {
+                    X = (1 - t2) * segment.P1.X + t2 * segment.P2.X,
+                    Y = (1 - t2) * segment.P1.Y + t2 * segment.P2.Y
+                };
+
+                intersects = point1.Equals(point2) ? new[] {point1} : new[] {point1, point2};
+                return true;
+            }
+
+            // here t1 didn't intersect so we are either started
+            // inside the sphere or completely past it
+            if (t2 >= 0 && t2 <= 1) {
+                // ExitWound
+                var point = new Vector {
+                    X = (1 - t2) * segment.P1.X + t2 * segment.P2.X,
+                    Y = (1 - t2) * segment.P1.Y + t2 * segment.P2.Y
+                };
+                intersects = new []{point};
+                return true;
+            }
+
+            // no intn: FallShort, Past, CompletelyInside
+            intersects = default;
+            return false;
         }
     }
 }

@@ -50,7 +50,7 @@ namespace cirno.Tests.Geometry {
         public void TestCircleLineIntersect2() {
             var line = L(V(0.0f, 0.0f), V(1.0f, 1.0f));
             var circle = new Circle(V(0.0f, 0.0f), 1.0f);
-            var intersects = new[] {V(0.7071068f, 0.7071068f), V(-0.7071068f, -0.7071068f)};
+            var intersects = new[] {V(0.707106769f, 0.707106769f), V(-0.707106769f, -0.707106769f)};
             
             AssertIntersect(circle, line, intersects);
             AssertIntersect(line, circle, intersects);
@@ -77,18 +77,43 @@ namespace cirno.Tests.Geometry {
         }
 
         [TestMethod]
-        public void TestCircleSegmentIntersect() {
+        public void TestCircleSegmentIntersectTwoPoints() {
+            var segment = S(V(-2.0f, -2.0f), V(2.0f, 2.0f));
+            var circle = new Circle(V(0.0f, 0.0f), 1.0f);
+            var intersects = new Vector[] {V(0.7071068f, 0.7071068f), V(-0.7071068f, -0.7071068f)};
             
+            AssertIntersect(circle, segment, intersects);
+            AssertIntersect(segment, circle, intersects);
+        }
+
+        [TestMethod]
+        public void TestCircleSegmentIntersectOnePoint() {
+            var segment = S(V(0.0f, 0.0f), V(2.0f, 2.0f));
+            var circle = new Circle(V(0.0f, 0.0f), 1.0f);
+            var intersects = new Vector[] {V(0.707106769f, 0.707106769f)};
+            
+            AssertIntersect(circle, segment, intersects);
+            AssertIntersect(segment, circle, intersects);
         }
 
         [TestMethod]
         public void TestCircleSegmentTangent() {
+            var segment = S(V(-0.5f, 1.0f), V(0.5f, 1.0f));
+            var circle = new Circle(V(0.0f, 0.0f), 1.0f);
+            var intersects = new Vector[] {V(0.0f, 1.0f)};
             
+            AssertIntersect(circle, segment, intersects);
+            AssertIntersect(segment, circle, intersects);
         }
 
         [TestMethod]
         public void TestCircleSegmentNoIntersect() {
+            var segment = S(V(0.0f, 2.0f), V(0.0f, 1.5f));
+            var circle = new Circle(V(0.0f, 0.0f), 1.0f);
+            var intersects = new Vector[] {};
             
+            AssertIntersect(circle, segment);
+            AssertIntersect(segment, circle);
         }
     }
 }
