@@ -20,6 +20,14 @@ namespace cirno.Geometry {
                     return LineLine(sa, sb, true, true, out intersects);
                 case Circle ca when b is Circle cb:
                     return CircleCircle(ca, cb, out intersects);
+                case Circle ca when b is Line lb:
+                    return CircleLine(ca, lb, out intersects);
+                case Line la when b is Circle cb:
+                    return CircleLine(cb, la, out intersects);
+                case Circle ca when b is LineSegment sb:
+                    throw new NotImplementedException();
+                case LineSegment la when b is Circle cb:
+                    throw new NotImplementedException();
                 default:
                     throw new NotImplementedException();
             }
@@ -112,8 +120,42 @@ namespace cirno.Geometry {
             }
 
             // No intersection, far outside or one circle within the other
-            intersects = new Vector[] { };
+            intersects = default;
             return false;
+        }
+
+        public static bool CircleLine(Circle c, Line l, out Vector[] intersects) {
+            var dx = l.P2.X - l.P1.X;
+            var dy = l.P2.Y - l.P1.Y;
+            var dr = Math.Sqrt(dx * dx + dy * dy);
+            var D = l.P1.X * l.P2.Y - l.P2.X * l.P1.Y;
+            var discriminant = c.Radius * c.Radius * dr * dr - D * D;
+
+            var signOf = new Func<float, int>((number) => { return number < 0 ? -1 : 1; });
+            
+            switch (discriminant) {
+                case var d when d < 0:
+                    intersects = default;
+                    return false;
+                case 0:
+                    var point = new Vector {
+                        X = (float)((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float)((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                    };
+                    intersects = new Vector[] { point };
+                    return true;
+                default:
+                    var point1 = new Vector {
+                        X = (float)((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float)((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                    };
+                    var point2 = new Vector {
+                        X = (float)((D * dy - signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float)((-D * dx - Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                    };
+                    intersects = new Vector[] { point1, point2 };
+                    return true;
+            }
         }
     }
 }
