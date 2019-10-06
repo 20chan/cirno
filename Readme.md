@@ -12,10 +12,12 @@ For my personal projects like:
 ## CurrentProgress
 
 - [ ] Geometry
-  - [ ] Intersections
-    - [x] LineLine
-    - [x] LineSeg
-    - [x] SegSeg
+  - x] Shapes
+    - [x] Line
+    - [x] Line Segment
+    - [x] Circle
+  - [x] Intersections
+  - [x] Equality
 
 ## TODO
 
