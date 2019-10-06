@@ -69,7 +69,6 @@ namespace cirno.Geometry {
                     return false;
                 }
             }
-
             if (bSeg) {
                 if (u < 0 || 1 < u) {
                     intersects = default;
@@ -77,7 +76,7 @@ namespace cirno.Geometry {
                 }
             }
 
-            intersects = new[] {new Vector(xNume / deno, yNume / deno)};
+            intersects = new[] { new Vector(xNume / deno, yNume / deno) };
             return true;
         }
 
@@ -103,18 +102,18 @@ namespace cirno.Geometry {
                 var y = Math.Sqrt(c1.Radius * c1.Radius - x * x);
 
                 var intersection1 = new Vector {
-                    X = (float) (c1.Center.X + x * ex - y * ey),
-                    Y = (float) (c1.Center.Y + x * ey + y * ex)
+                    X = (float)(c1.Center.X + x * ex - y * ey),
+                    Y = (float)(c1.Center.Y + x * ey + y * ex)
                 };
 
                 var intersection2 = new Vector {
-                    X = (float) (c1.Center.X + x * ex + y * ey),
-                    Y = (float) (c1.Center.Y + x * ey - y * ex)
+                    X = (float)(c1.Center.X + x * ex + y * ey),
+                    Y = (float)(c1.Center.Y + x * ey - y * ex)
                 };
 
                 intersects = intersection1.Equals(intersection2)
-                    ? new[] {intersection1}
-                    : new[] {intersection1, intersection2};
+                    ? new[] { intersection1 }
+                    : new[] { intersection1, intersection2 };
                 return true;
             }
 
@@ -138,21 +137,21 @@ namespace cirno.Geometry {
                     return false;
                 case 0:
                     var point = new Vector {
-                        X = (float) ((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
-                        Y = (float) ((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                        X = (float)((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float)((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
                     };
-                    intersects = new Vector[] {point};
+                    intersects = new[] { point };
                     return true;
                 default:
                     var point1 = new Vector {
-                        X = (float) ((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
-                        Y = (float) ((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                        X = (float)((D * dy + signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float)((-D * dx + Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
                     };
                     var point2 = new Vector {
-                        X = (float) ((D * dy - signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
-                        Y = (float) ((-D * dx - Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
+                        X = (float)((D * dy - signOf(dy) * dx * Math.Sqrt(discriminant)) / (dr * dr)),
+                        Y = (float)((-D * dx - Math.Abs(dy) * Math.Sqrt(discriminant)) / (dr * dr))
                     };
-                    intersects = new Vector[] {point1, point2};
+                    intersects = new[] { point1, point2 };
                     return true;
             }
         }
@@ -173,7 +172,7 @@ namespace cirno.Geometry {
                 return false;
             }
 
-            discriminant = (float) Math.Sqrt(discriminant);
+            discriminant = (float)Math.Sqrt(discriminant);
 
             var t1 = (-b - discriminant) / (2 * a);
             var t2 = (-b + discriminant) / (2 * a);
@@ -199,7 +198,7 @@ namespace cirno.Geometry {
                     Y = (1 - t2) * segment.P1.Y + t2 * segment.P2.Y
                 };
 
-                intersects = point1.Equals(point2) ? new[] {point1} : new[] {point1, point2};
+                intersects = point1.Equals(point2) ? new[] { point1 } : new[] { point1, point2 };
                 return true;
             }
 
@@ -211,7 +210,7 @@ namespace cirno.Geometry {
                     X = (1 - t2) * segment.P1.X + t2 * segment.P2.X,
                     Y = (1 - t2) * segment.P1.Y + t2 * segment.P2.Y
                 };
-                intersects = new []{point};
+                intersects = new[] { point };
                 return true;
             }
 
