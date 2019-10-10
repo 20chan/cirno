@@ -48,7 +48,12 @@ namespace cirno.Geometry {
 
         public float Distance(Vector point)
         {
-            throw new NotImplementedException();
+            var lineDistance = P1.Distance(P2);
+            var aPointX = (P2.Y - P1.Y) * point.X;
+            var bPointY = (P2.X - P1.X) * point.Y;
+            var c = P2.X * P1.Y - P2.Y * P1.X;
+
+            return Math.Abs(aPointX - bPointY + c) / lineDistance;
         }
 
         public Vector GetClosestPoint(Vector point)

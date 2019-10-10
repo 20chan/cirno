@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Numerics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using cirno;
 using cirno.Geometry;
 using static cirno.Tests.Geometry.GeometryTestHelper;
@@ -33,6 +35,26 @@ namespace cirno.Tests.Geometry {
             var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
             var distance = line.Distance(circle);
             Assert.AreEqual(0f, distance);
+        }
+
+        [TestMethod]
+        public void GivenLine_WhenCallingGetClosestPointWithAPoint_ThenReturnClosestPoint()
+        {
+            var point = new Vector(1f, 1f);
+            var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
+            var expectedClosest = new Vector();
+        }
+
+        [TestMethod]
+        public void GivenLine_WhenCallingDistanceToAPoint_ThenReturnDistance()
+        {
+            var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
+            var point = new Vector(1f, 1f);
+
+            var expected = 1f;
+            var actual = line.Distance(point);
+            
+            Assert.AreEqual(expected, actual, 0.01f);
         }
     }
 }
