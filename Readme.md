@@ -12,7 +12,7 @@ For my personal projects like:
 ## CurrentProgress
 
 - [ ] Geometry
-  - x] Shapes
+  - [x] Shapes
     - [x] Line
     - [x] Line Segment
     - [x] Circle
