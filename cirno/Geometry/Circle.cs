@@ -38,5 +38,10 @@ namespace cirno.Geometry {
         public object Clone() {
             return new Circle(Center, Radius);
         }
+
+        public float Distance(IShape shape)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

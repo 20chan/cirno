@@ -25,5 +25,14 @@ namespace cirno.Tests.Geometry {
             Assert.AreEqual(V(0.5f, 0.5f), line0.GetPerpendicularFootOn(V(0, 1)));
             Assert.AreEqual(V(1, 0), line0.GetPerpendicular(V(0, 1)));
         }
+
+        [TestMethod]
+        public void GivenLine_WhenCallingDistanceWithACircle_ReturnDistanceBetweenShapes()
+        {
+            var circle = new Circle(new Vector(1f, 1f), 1f);
+            var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
+            var distance = line.Distance(circle);
+            Assert.AreEqual(0f, distance);
+        }
     }
 }
