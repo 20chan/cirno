@@ -58,7 +58,14 @@ namespace cirno.Geometry {
 
         public Vector GetClosestPoint(Vector point)
         {
-            throw new NotImplementedException();
+            var aC = Distance(point);
+            var aB = P1.Distance(point);
+            var bC = Math.Sqrt(Math.Pow(aC, 2) + Math.Pow(aB, 2));
+
+            var cY = (float) (Math.Pow(aB, 2) + Math.Pow(aC, 2) - Math.Pow(bC, 2)) / (2 * aB);
+            var cX = (float) Math.Sqrt(Math.Pow(aC, 2) - Math.Pow(cY, 2));
+            
+            return new Vector(cX, cY);
         }
     }
 }

@@ -42,7 +42,12 @@ namespace cirno.Tests.Geometry {
         {
             var point = new Vector(1f, 1f);
             var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
-            var expectedClosest = new Vector();
+            
+            var expected = new Vector(0f, 1f);
+            var actual = line.GetClosestPoint(point);
+            
+            
+            Assert.IsTrue(expected.Equals(actual, 0.01f));
         }
 
         [TestMethod]
