@@ -41,9 +41,5 @@ namespace cirno.Geometry {
         }
 
         public abstract object Clone();
-        public float Distance(IShape shape)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
