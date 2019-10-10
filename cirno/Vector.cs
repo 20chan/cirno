@@ -47,6 +47,13 @@ namespace cirno {
         public float Dot(Vector other) {
             return X * other.X + Y * other.Y;
         }
+        
+        public float Distance(Vector other)
+        {
+            var xPowDif = Math.Pow(other.X - X, 2);
+            var yPowDif = Math.Pow(other.Y - Y, 2);
+            return (float) Math.Sqrt(xPowDif + yPowDif);
+        }
 
         public static Vector operator +(Vector a, Vector b) {
             return new Vector(a.X + b.X, a.Y + b.Y);
