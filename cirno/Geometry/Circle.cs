@@ -38,5 +38,19 @@ namespace cirno.Geometry {
         public object Clone() {
             return new Circle(Center, Radius);
         }
+
+        public float Distance(IShape other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Vector GetClosestPoint(Vector point)
+        {
+            var distance = Center.Distance(point);
+            var closestX = Center.X + Radius * ((point.X - Center.X) / distance);
+            var closestY = Center.Y + Radius * ((point.Y - Center.Y) / distance);
+            
+            return new Vector(closestX, closestY);
+        }
     }
 }

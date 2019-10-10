@@ -41,5 +41,14 @@ namespace cirno.Geometry {
         }
 
         public abstract object Clone();
+        public float Distance(IShape other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Vector GetClosestPoint(Vector point)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
