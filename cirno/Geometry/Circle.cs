@@ -44,6 +44,12 @@ namespace cirno.Geometry {
             throw new NotImplementedException();
         }
 
+        public float Distance(Vector point)
+        {
+            var closestPoint = GetClosestPoint(point);
+            return closestPoint.Distance(point);
+        }
+
         public Vector GetClosestPoint(Vector point)
         {
             var distance = Center.Distance(point);

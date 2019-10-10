@@ -46,6 +46,11 @@ namespace cirno.Geometry {
             throw new NotImplementedException();
         }
 
+        public float Distance(Vector point)
+        {
+            throw new NotImplementedException();
+        }
+
         public Vector GetClosestPoint(Vector point)
         {
             throw new NotImplementedException();
