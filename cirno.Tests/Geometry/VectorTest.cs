@@ -7,21 +7,15 @@ namespace cirno.Tests.Geometry
     [TestClass]
     public class VectorTest
     {
-        private float NextFloat(Random random)
-        {
-            var buffer = new byte[4];
-            random.NextBytes(buffer);
-            return BitConverter.ToSingle(buffer,0);
-        }
         
         [TestMethod]
         public void GivenVector_WhenCallingDistance_ThenReturnDistanceFloat()
         {
             var rand = new Random();
-            var aX = NextFloat(rand);
-            var aY = NextFloat(rand);
-            var bX = NextFloat(rand);
-            var bY = NextFloat(rand);
+            var aX = rand.NextFloat();
+            var aY = rand.NextFloat();
+            var bX = rand.NextFloat();
+            var bY = rand.NextFloat();
             
             var pointA = new Vector(aX, aY);
             var pointB = new Vector(bX, bY);
