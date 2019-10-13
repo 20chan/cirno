@@ -32,12 +32,22 @@ namespace cirno {
                 && Math.Abs(Y - other.Y) < tolerance;
         }
 
+        public float Distance(Vector point)
+        {
+            return (float) Math.Sqrt(Math.Pow(X - point.X, 2) + Math.Pow(Y - point.Y, 2));
+        }
+
         public float Magnitude {
             get => X * X + Y * Y;
         }
 
         public float Length {
             get => (float)Math.Sqrt(Magnitude);
+        }
+
+        public Vector Round(int digits)
+        {
+            return new Vector((float)Math.Round(X, digits), (float)Math.Round(Y, digits));
         }
 
         public float Cross(Vector other) {

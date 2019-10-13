@@ -19,41 +19,41 @@ namespace cirno.Geometry {
             // idea :
             // the line strikes through the center of the center point will intersects the closest point
 
-            // get the line properties
-            float M = (point.Y - Center.Y) / (point.X - Center.X);
-            float Yc = point.Y - M * point.X;
+            // get the linear line properties
+            // line formula: y = Mx + C
+            double M = (point.Y - Center.Y) / (point.X - Center.X);
+            double Yc = point.Y - M * point.X;
 
             // get the circle properties
-            float A = Center.X;
-            float B = Center.Y;
-            float R = Radius;
-
             // circle formula: (x-A)^2 + (y-B)^2 = R^2
-            // line formula: y = Mx + C
-            // this two formula intersection will give quadratic formula
-            // (M^2 + 1)*x^2 + (2M(Yc - 1) -2)*x + ((C - 1)^2 -1 - R^2) = 0 
+            double A = Center.X;
+            double B = Center.Y;
+            double R = Radius;
 
-            float a = M * M + 1;
-            float b = 2 * M * (Yc - B) - 2 * A;
-            float c = (Yc + B) * (Yc + B) + A * A - R * R;
+            // this two formula intersection will give quadratic formula
+            // (x - A)^2 + (M*x + Yc - B)^2 = R^2
+            // (M^2 + 1)*x^2 + (2M(Yc - B) -2A)*x + ((Yc - B)^2 + A^2 - R^2) = 0 
+            double a = Math.Pow(M, 2) + 1;
+            double b = 2 * M * (Yc - B) - 2 * A;
+            double c = Math.Pow(Yc - B, 2) + Math.Pow(A, 2) - Math.Pow(R, 2);
 
             // get solution X
-            // using Determinant d = b^2 - 4*a*c
-            // using x = -b +/- sqrt(d) / 2a
-            float D = b * b - 4 * a * c;
+            // using Determinant, D = b^2 - 4*a*c
+            // using x = -b +/- sqrt(D) / 2a
+            double D = b * b - 4 * a * c;
 
             // this Quardratic always comes with 2 solutions
-            double x1 = (-b + Math.Sqrt(D)) / (2 * a);
+            double x1 = (-b - Math.Sqrt(D)) / (2 * a);
             double y1 = M * x1 + Yc;
             Vector v1 = new Vector((float)x1, (float)y1);
 
             double x2 = (-b + Math.Sqrt(D)) / (2 * a);
-            double y2 = M * x1 + Yc;
+            double y2 = M * x2 + Yc;
             Vector v2 = new Vector((float)x2, (float)y2);
 
             // get distance
-            double d1 = Math.Sqrt(Math.Pow(v1.X - point.X, 2) + Math.Pow(v1.Y - point.Y, 2));
-            double d2 = Math.Sqrt(Math.Pow(v2.X - point.X, 2) + Math.Pow(v2.Y - point.Y, 2));
+            double d1 = point.Distance(v1);
+            double d2 = point.Distance(v2);
 
             // compare and return the closest one
             return d1 < d2 ? v1 : v2;
@@ -61,48 +61,7 @@ namespace cirno.Geometry {
 
         public float Distance(Vector point)
         {
-            // idea :
-            // the line strikes through the center of the center point will intersects the closest point
-            // same as how we get the closest point.
-
-            // get the line properties
-            float M = (point.Y - Center.Y) / (point.X - Center.X);
-            float Yc = point.Y - M * point.X;
-
-            // get the circle properties
-            float A = Center.X;
-            float B = Center.Y;
-            float R = Radius;
-
-            // circle formula: (x-A)^2 + (y-B)^2 = R^2
-            // line formula: y = Mx + C
-            // this two formula intersection will give quadratic formula
-            // (M^2 + 1)*x^2 + (2M(Yc - 1) -2)*x + ((C - 1)^2 -1 - R^2) = 0 
-
-            float a = M * M + 1;
-            float b = 2 * M * (Yc - B) - 2 * A;
-            float c = (Yc + B) * (Yc + B) + A * A - R * R;
-
-            // get solution X
-            // using Determinant d = b^2 - 4*a*c
-            // using x = -b +/- sqrt(d) / 2a
-            float D = b * b - 4 * a * c;
-
-            // this Quardratic always comes with 2 solutions
-            double x1 = (-b + Math.Sqrt(D)) / (2 * a);
-            double y1 = M * x1 + Yc;
-            Vector v1 = new Vector((float)x1, (float)y1);
-
-            double x2 = (-b + Math.Sqrt(D)) / (2 * a);
-            double y2 = M * x1 + Yc;
-            Vector v2 = new Vector((float)x2, (float)y2);
-
-            // get distance
-            double d1 = Math.Sqrt(Math.Pow(v1.X - point.X, 2) + Math.Pow(v1.Y - point.Y, 2));
-            double d2 = Math.Sqrt(Math.Pow(v2.X - point.X, 2) + Math.Pow(v2.Y - point.Y, 2));
-
-            // compare and return the closest one
-            return d1 < d2 ? (float) d1 : (float) d2;
+            return point.Distance(GetClosestPoint(point));
         }
 
         public override int GetHashCode() {
