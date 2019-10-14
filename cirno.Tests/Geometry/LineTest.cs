@@ -29,15 +29,6 @@ namespace cirno.Tests.Geometry {
         }
 
         [TestMethod]
-        public void GivenLine_WhenCallingDistanceWithACircle_ReturnDistanceBetweenShapes()
-        {
-            var circle = new Circle(new Vector(1f, 1f), 1f);
-            var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
-            var distance = line.Distance(circle);
-            Assert.AreEqual(0f, distance);
-        }
-
-        [TestMethod]
         public void GivenLine_WhenCallingGetClosestPointWithAPoint_ThenReturnClosestPoint()
         {
             var point = new Vector(1f, 1f);
