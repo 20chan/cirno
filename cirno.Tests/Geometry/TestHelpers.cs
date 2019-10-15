@@ -4,11 +4,10 @@ namespace cirno.Tests.Geometry
 {
     public static class TestHelpers
     {
-        public static float NextFloat(this Random random)
+        public static float NextFloat(this Random random, float min = float.MinValue, float max = float.MaxValue)
         {
-            var buffer = new byte[4];
-            random.NextBytes(buffer);
-            return BitConverter.ToSingle(buffer,0);
+            var result = random.NextDouble() * (max - (double)min) + min;
+            return (float)result;
         }
     }
 }

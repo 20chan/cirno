@@ -43,8 +43,8 @@ namespace cirno.Tests.Geometry {
         public void GivenCircle_WhenCallingDistanceToAPoint_ThenReturnDistance()
         {
             var rand = new Random();
-            var circle = new Circle(new Vector(rand.NextFloat(), rand.NextFloat()), rand.NextFloat());
-            var point = new Vector(rand.NextFloat(), rand.NextFloat());
+            var circle = new Circle(new Vector(rand.NextFloat(-1000000f, 1000000f), rand.NextFloat(-1000000f, 1000000f)), rand.NextFloat(-1000000f, 1000000f));
+            var point = new Vector(rand.NextFloat(-1000000f, 1000000f), rand.NextFloat(-1000000f, 1000000f));
             var closest = circle.GetClosestPoint(point);
 
             var expected = Vector2.Distance(new Vector2(closest.X, closest.Y), new Vector2(point.X, point.Y));

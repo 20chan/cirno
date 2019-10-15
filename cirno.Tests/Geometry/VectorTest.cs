@@ -12,10 +12,10 @@ namespace cirno.Tests.Geometry
         public void GivenVector_WhenCallingDistance_ThenReturnDistanceFloat()
         {
             var rand = new Random();
-            var aX = rand.NextFloat();
-            var aY = rand.NextFloat();
-            var bX = rand.NextFloat();
-            var bY = rand.NextFloat();
+            var aX = rand.NextFloat(-1000000f, 1000000f);
+            var aY = rand.NextFloat(-1000000f, 1000000f);
+            var bX = rand.NextFloat(-1000000f, 1000000f);
+            var bY = rand.NextFloat(-1000000f, 1000000f);
             
             var pointA = new Vector(aX, aY);
             var pointB = new Vector(bX, bY);
