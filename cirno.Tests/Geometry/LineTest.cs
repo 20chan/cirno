@@ -29,7 +29,7 @@ namespace cirno.Tests.Geometry {
         }
 
         [TestMethod]
-        public void GivenLine_WhenCallingGetClosestPointWithAPoint_ThenReturnClosestPoint(){
+        public void GivenLine_WhenCallingGetClosestPointWithAPoint_ThenReturnClosestPoint() {
             var point = new Vector(1f, 1f);
             var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
 
@@ -40,7 +40,7 @@ namespace cirno.Tests.Geometry {
         }
         
         [TestMethod]
-        public void GivenLine_WhenCallingGetClosestPointWithAnotherPoint_ThenReturnClosestPoint(){
+        public void GivenLine_WhenCallingGetClosestPointWithAnotherPoint_ThenReturnClosestPoint() {
             var point = new Vector(0.5f, 0.5f);
             var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
 
@@ -51,7 +51,7 @@ namespace cirno.Tests.Geometry {
         }
         
         [TestMethod]
-        public void GivenHorizontalLine_WhenCallingGetClosestPointWithPoint_ThenReturnClosestPoint(){
+        public void GivenHorizontalLine_WhenCallingGetClosestPointWithPoint_ThenReturnClosestPoint() {
             var point = new Vector(0.5f, 0.5f);
             var line = new Line(new Vector(0f, 0f), new Vector(1f ,0f));
 
@@ -62,7 +62,7 @@ namespace cirno.Tests.Geometry {
         }
         
         [TestMethod]
-        public void GivenSlopedLine_WhenCallingGetClosestPointWithPoint_ThenReturnClosestPoint(){
+        public void GivenSlopedLine_WhenCallingGetClosestPointWithPoint_ThenReturnClosestPoint() {
             var point = new Vector(0.5f, 0.5f);
             var line = new Line(new Vector(0f, 0f), new Vector(1f ,1f));
 
@@ -73,7 +73,7 @@ namespace cirno.Tests.Geometry {
         }
 
         [TestMethod]
-        public void GivenLine_WhenCallingDistanceToAPoint_ThenReturnDistance(){
+        public void GivenLine_WhenCallingDistanceToAPoint_ThenReturnDistance() {
             var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
             var point = new Vector(1f, 1f);
 
