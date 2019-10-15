@@ -32,24 +32,22 @@ namespace cirno.Tests.Geometry {
         }
 
         [TestMethod]
-        public void GivenCircle_WhenCallingGetClosestPointWithAPoint_ThenReturnClosestPoint()
-        {
+        public void GivenCircle_WhenCallingGetClosestPointWithAPoint_ThenReturnClosestPoint(){
             var circle = new Circle(new Vector(1f, 1f), 1f);
             var closest = circle.GetClosestPoint(new Vector(0f, 0f));
             Assert.IsTrue(closest.Equals(new Vector(0.29f, 0.29f), 0.01f));
         }
 
         [TestMethod]
-        public void GivenCircle_WhenCallingDistanceToAPoint_ThenReturnDistance()
-        {
+        public void GivenCircle_WhenCallingDistanceToAPoint_ThenReturnDistance(){
             var rand = new Random();
-            var circle = new Circle(new Vector(rand.NextFloat(-1000000f, 1000000f), rand.NextFloat(-1000000f, 1000000f)), rand.NextFloat(-1000000f, 1000000f));
-            var point = new Vector(rand.NextFloat(-1000000f, 1000000f), rand.NextFloat(-1000000f, 1000000f));
+            var circle = new Circle(new Vector(rand.NextFloat(), rand.NextFloat()), rand.NextFloat());
+            var point = new Vector(rand.NextFloat(), rand.NextFloat());
             var closest = circle.GetClosestPoint(point);
 
             var expected = Vector2.Distance(new Vector2(closest.X, closest.Y), new Vector2(point.X, point.Y));
             var actual = circle.Distance(point);
-            
+
             Assert.AreEqual(expected, actual, 0.01f);
         }
     }
