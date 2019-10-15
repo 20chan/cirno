@@ -41,5 +41,49 @@ namespace cirno.Geometry {
         }
 
         public abstract object Clone();
+
+        public float Distance(IShape other) {
+            throw new NotImplementedException();
+        }
+
+        public float Distance(Vector point) {
+            var lineDistance = P1.Distance(P2);
+            var aPointX = (P2.Y - P1.Y) * point.X;
+            var bPointY = (P2.X - P1.X) * point.Y;
+            var c = P2.X * P1.Y - P2.Y * P1.X;
+
+            return Math.Abs(aPointX - bPointY + c) / lineDistance;
+        }
+
+        public Vector GetClosestPoint(Vector point) {
+            var closestPoint = new Vector();
+            var slope = GetSlopeOfLine();
+            if (float.IsInfinity(slope))
+            {
+                closestPoint.X = P1.X;
+                closestPoint.Y = point.Y;
+            }
+            else if(Math.Abs(slope) < 0.01f)
+            {
+                closestPoint.X = point.X;
+                closestPoint.Y = P1.Y;
+            }
+            else
+            {
+                var yIntercept = P1.Y - slope * P1.X;
+                var perpendicularSlope = -(1 / slope);
+                var perpendicularYIntercept = point.Y - perpendicularSlope * point.X;
+                var closestX = (perpendicularYIntercept - yIntercept) / (slope - perpendicularSlope);
+                var closestY = slope * closestX + yIntercept;
+                closestPoint.X = closestX;
+                closestPoint.Y = closestY;
+            }
+
+            return closestPoint;
+        }
+
+        private float GetSlopeOfLine() {
+            return (P2.Y - P1.Y) / (P2.X - P1.X);
+        }
     }
 }
