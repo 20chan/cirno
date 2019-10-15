@@ -32,11 +32,6 @@ namespace cirno {
                 && Math.Abs(Y - other.Y) < tolerance;
         }
 
-        public float Distance(Vector point)
-        {
-            return (float)Math.Sqrt(Math.Pow(X - point.X, 2) + Math.Pow(Y - point.Y, 2));
-        }
-
         public float Magnitude {
             get => X * X + Y * Y;
         }

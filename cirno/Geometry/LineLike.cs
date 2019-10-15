@@ -58,18 +58,15 @@ namespace cirno.Geometry {
         public Vector GetClosestPoint(Vector point) {
             var closestPoint = new Vector();
             var slope = GetSlopeOfLine();
-            if (float.IsInfinity(slope))
-            {
+            if (float.IsInfinity(slope)) {
                 closestPoint.X = P1.X;
                 closestPoint.Y = point.Y;
             }
-            else if(Math.Abs(slope) < 0.01f)
-            {
+            else if(Math.Abs(slope) < 0.01f) {
                 closestPoint.X = point.X;
                 closestPoint.Y = P1.Y;
             }
-            else
-            {
+            else {
                 var yIntercept = P1.Y - slope * P1.X;
                 var perpendicularSlope = -(1 / slope);
                 var perpendicularYIntercept = point.Y - perpendicularSlope * point.X;
