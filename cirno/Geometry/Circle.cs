@@ -39,23 +39,20 @@ namespace cirno.Geometry {
             return new Circle(Center, Radius);
         }
 
-        public float Distance(IShape other)
-        {
+        public float Distance(IShape other) {
             throw new NotImplementedException();
         }
 
-        public float Distance(Vector point)
-        {
+        public float Distance(Vector point) {
             var closestPoint = GetClosestPoint(point);
             return closestPoint.Distance(point);
         }
 
-        public Vector GetClosestPoint(Vector point)
-        {
+        public Vector GetClosestPoint(Vector point) {
             var distance = Center.Distance(point);
             var closestX = Center.X + Radius * ((point.X - Center.X) / distance);
             var closestY = Center.Y + Radius * ((point.Y - Center.Y) / distance);
-            
+
             return new Vector(closestX, closestY);
         }
     }

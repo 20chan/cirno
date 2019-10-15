@@ -29,66 +29,57 @@ namespace cirno.Tests.Geometry {
         }
 
         [TestMethod]
-        public void GivenLine_WhenCallingGetClosestPointWithAPoint_ThenReturnClosestPoint()
-        {
+        public void GivenLine_WhenCallingGetClosestPointWithAPoint_ThenReturnClosestPoint(){
             var point = new Vector(1f, 1f);
             var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
-            
+
             var expected = new Vector(0f, 1f);
             var actual = line.GetClosestPoint(point);
-            
-            
+
             Assert.IsTrue(expected.Equals(actual, 0.01f));
         }
         
         [TestMethod]
-        public void GivenLine_WhenCallingGetClosestPointWithAnotherPoint_ThenReturnClosestPoint()
-        {
+        public void GivenLine_WhenCallingGetClosestPointWithAnotherPoint_ThenReturnClosestPoint(){
             var point = new Vector(0.5f, 0.5f);
             var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
-            
+
             var expected = new Vector(0f, 0.5f);
             var actual = line.GetClosestPoint(point);
-            
-            
+
             Assert.IsTrue(expected.Equals(actual, 0.01f));
         }
         
         [TestMethod]
-        public void GivenHorizontalLine_WhenCallingGetClosestPointWithPoint_ThenReturnClosestPoint()
-        {
+        public void GivenHorizontalLine_WhenCallingGetClosestPointWithPoint_ThenReturnClosestPoint(){
             var point = new Vector(0.5f, 0.5f);
             var line = new Line(new Vector(0f, 0f), new Vector(1f ,0f));
-            
+
             var expected = new Vector(0.5f, 0f);
             var actual = line.GetClosestPoint(point);
-            
-            
+
             Assert.IsTrue(expected.Equals(actual, 0.01f));
         }
         
         [TestMethod]
-        public void GivenSlopedLine_WhenCallingGetClosestPointWithPoint_ThenReturnClosestPoint()
-        {
+        public void GivenSlopedLine_WhenCallingGetClosestPointWithPoint_ThenReturnClosestPoint(){
             var point = new Vector(0.5f, 0.5f);
             var line = new Line(new Vector(0f, 0f), new Vector(1f ,1f));
-            
+
             var expected = new Vector(0.5f, 0.5f);
             var actual = line.GetClosestPoint(point);
-            
-            
+
             Assert.IsTrue(expected.Equals(actual, 0.01f));
         }
 
         [TestMethod]
-        public void GivenLine_WhenCallingDistanceToAPoint_ThenReturnDistance()
-        {
+        public void GivenLine_WhenCallingDistanceToAPoint_ThenReturnDistance(){
             var line = new Line(new Vector(0f, 0f), new Vector(0f ,1f));
             var point = new Vector(1f, 1f);
 
             var expected = 1f;
             var actual = line.Distance(point);
-            
+
             Assert.AreEqual(expected, actual, 0.01f);
         }
     }

@@ -41,13 +41,12 @@ namespace cirno.Geometry {
         }
 
         public abstract object Clone();
-        public float Distance(IShape other)
-        {
+
+        public float Distance(IShape other) {
             throw new NotImplementedException();
         }
 
-        public float Distance(Vector point)
-        {
+        public float Distance(Vector point) {
             var lineDistance = P1.Distance(P2);
             var aPointX = (P2.Y - P1.Y) * point.X;
             var bPointY = (P2.X - P1.X) * point.Y;
@@ -56,8 +55,7 @@ namespace cirno.Geometry {
             return Math.Abs(aPointX - bPointY + c) / lineDistance;
         }
 
-        public Vector GetClosestPoint(Vector point)
-        {
+        public Vector GetClosestPoint(Vector point) {
             var closestPoint = new Vector();
             var slope = GetSlopeOfLine();
             if (float.IsInfinity(slope))
@@ -84,8 +82,7 @@ namespace cirno.Geometry {
             return closestPoint;
         }
 
-        private float GetSlopeOfLine()
-        {
+        private float GetSlopeOfLine() {
             return (P2.Y - P1.Y) / (P2.X - P1.X);
         }
     }
