@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using cirno.Geometry;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace cirno.Tests.Geometry {
     [TestClass]
